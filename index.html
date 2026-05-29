@@ -3,55 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Predio Virtual - Autos en Venta</title>
+    <title>SALREZ Auto Solutions - Inventario</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body class="bg-gray-100 font-sans">
 
-    <header class="bg-blue-700 text-white p-6 shadow-md text-center">
-        <h1 class="text-3xl font-bold">🚗 MI PREDIO VIRTUAL</h1>
-        <p class="text-sm mt-1">Inventario actualizado en tiempo real</p>
+    <header class="bg-zinc-900 border-b-4 border-red-600 text-white p-4 shadow-md text-center">
+        <img src="logo.jpg" alt="SALREZ Auto Solutions" class="h-20 mx-auto object-contain" onerror="this.style.display='none'">
+        <p class="text-sm mt-2 text-gray-300 tracking-wider">INVENTARIO ACTUALIZADO</p>
     </header>
 
-    <div class="max-w-6xl mx-auto mt-6 p-4 bg-white rounded-lg shadow flex flex-col md:flex-row gap-4">
-        <input type="text" id="search" placeholder="Buscar por marca, modelo o código..." class="border p-2 rounded w-full md:w-1/2 focus:outline-blue-500">
-        <select id="filter-marca" class="border p-2 rounded w-full md:w-1/4">
-            <option value="">Todas las marcas</option>
+    <div class="max-w-7xl mx-auto mt-6 p-4 bg-white rounded-lg shadow grid grid-cols-1 md:grid-cols-4 gap-4">
+        <input type="text" id="search" placeholder="🔍 Buscar marca, modelo o ID..." class="border p-2 rounded w-full focus:outline-red-600">
+        <select id="filter-marca" class="border p-2 rounded w-full focus:outline-red-600">
+            <option value="">Todas las Marcas</option>
         </select>
-        <select id="filter-anio" class="border p-2 rounded w-full md:w-1/4">
-            <option value="">Todos los años</option>
+        <select id="filter-anio" class="border p-2 rounded w-full focus:outline-red-600">
+            <option value="">Todos los Años</option>
+        </select>
+        <select id="filter-estado" class="border p-2 rounded w-full focus:outline-red-600">
+            <option value="">Todos los Estados</option>
         </select>
     </div>
 
-    <main id="catalogo" class="max-w-6xl mx-auto mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-4">
+    <main id="catalogo" class="max-w-7xl mx-auto mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 p-4">
         </main>
 
-    <div id="modal" class="fixed inset-0 bg-black bg-opacity-75 z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto relative p-6">
-            <button onclick="cerrarModal()" class="absolute top-4 right-4 text-gray-600 hover:text-black text-2xl font-bold">&times;</button>
+    <div id="modal" class="fixed inset-0 bg-black bg-opacity-80 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-lg max-w-5xl w-full max-h-[95vh] overflow-y-auto relative p-6">
+            <button onclick="cerrarModal()" class="absolute top-4 right-4 text-gray-500 hover:text-red-600 text-3xl font-bold">&times;</button>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-4">
                 <div>
-                    <div class="relative h-64 md:h-80 bg-black rounded-lg overflow-hidden flex items-center justify-center">
+                    <div class="relative h-72 lg:h-96 bg-zinc-100 rounded-lg overflow-hidden flex items-center justify-center border">
                         <img id="galeria-img" src="" class="max-h-full max-w-full object-contain">
-                        <button onclick="cambiarFoto(-1)" class="absolute left-2 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-70"><i class="fas fa-chevron-left"></i></button>
-                        <button onclick="cambiarFoto(1)" class="absolute right-2 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-70"><i class="fas fa-chevron-right"></i></button>
+                        <button onclick="cambiarFoto(-1)" class="absolute left-2 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-white p-3 rounded-full hover:bg-red-600 transition"><i class="fas fa-chevron-left"></i></button>
+                        <button onclick="cambiarFoto(1)" class="absolute right-2 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-white p-3 rounded-full hover:bg-red-600 transition"><i class="fas fa-chevron-right"></i></button>
                     </div>
-                    <p id="galeria-contador" class="text-center text-sm text-gray-500 mt-2">Foto 1 de 1</p>
+                    <p id="galeria-contador" class="text-center text-sm text-gray-500 mt-3 font-bold"></p>
                 </div>
 
                 <div class="flex flex-col justify-between">
                     <div>
-                        <h2 id="modal-titulo" class="text-2xl font-bold text-gray-800"></h2>
-                        <p id="modal-precio" class="text-xl font-bold text-green-600 mt-1"></p>
-                        <hr class="my-4">
-                        <div class="grid grid-cols-2 gap-2 text-sm text-gray-600" id="modal-detalles">
+                        <div class="flex justify-between items-start">
+                            <h2 id="modal-titulo" class="text-2xl font-bold text-gray-800 uppercase"></h2>
+                            <span id="modal-badge-estado" class="px-3 py-1 text-sm font-bold text-white rounded"></span>
+                        </div>
+                        <p id="modal-precio" class="text-3xl font-black text-red-600 mt-2"></p>
+                        <p class="text-xs text-gray-400 mt-1">ID: <span id="modal-id"></span> | Ingreso: <span id="modal-ingreso"></span></p>
+                        
+                        <hr class="my-4 border-gray-200">
+                        
+                        <div class="grid grid-cols-2 gap-y-3 gap-x-4 text-sm text-gray-700" id="modal-detalles">
                             </div>
-                        <p id="modal-descripcion" class="mt-4 text-gray-700 text-sm bg-gray-50 p-3 rounded"></p>
+                        
+                        <div class="mt-4 bg-gray-50 p-4 rounded border">
+                            <h4 class="font-bold text-xs text-gray-500 uppercase mb-2">Características Extra:</h4>
+                            <p id="modal-descripcion" class="text-sm whitespace-pre-line"></p>
+                        </div>
                     </div>
-                    <a id="btn-whatsapp" href="#" target="_blank" class="mt-6 block text-center bg-green-500 text-white font-bold py-3 rounded-lg shadow hover:bg-green-600 transition">
-                        <i class="fab fa-whatsapp mr-2"></i> ME INTERESA / SOLICITAR INFO
+                    
+                    <a id="btn-whatsapp" href="#" target="_blank" class="mt-6 block text-center bg-green-500 text-white font-bold py-4 rounded-lg shadow-lg hover:bg-green-600 transition text-lg">
+                        <i class="fab fa-whatsapp mr-2 text-xl"></i> SOLICITAR INFORMACIÓN
                     </a>
                 </div>
             </div>
@@ -62,7 +76,7 @@
         let inventario = [];
         let fotosActuales = [];
         let fotoIndex = 0;
-        const numeroWhatsApp = "50255555555"; // ⚠️ REEMPLAZA CON TU NÚMERO (Incluye código de país, ej: 502 para Guate)
+        const numeroWhatsApp = "50255555555"; // ⚠️ REEMPLAZA CON EL NÚMERO DE SALREZ
 
         // Cargar Datos del archivo JSON
         async function cargarInventario() {
@@ -77,11 +91,13 @@
         }
 
         function generarFiltros() {
-            const marcas = [...new Set(inventario.map(c => c.marca))];
-            const anios = [...new Set(inventario.map(c => c.anio))].sort((a,b)=>b-a);
+            const marcas = [...new Set(inventario.map(c => c.marca))].filter(Boolean);
+            const anios = [...new Set(inventario.map(c => c.anio))].filter(Boolean).sort((a,b)=>b-a);
+            const estados = [...new Set(inventario.map(c => c.estado_venta))].filter(Boolean);
             
             marcas.forEach(m => document.getElementById('filter-marca').innerHTML += `<option value="${m}">${m}</option>`);
             anios.forEach(a => document.getElementById('filter-anio').innerHTML += `<option value="${a}">${a}</option>`);
+            estados.forEach(e => document.getElementById('filter-estado').innerHTML += `<option value="${e}">${e}</option>`);
         }
 
         function renderizarCatálogo(lista) {
@@ -89,21 +105,36 @@
             contenedor.innerHTML = '';
             
             if(lista.length === 0) {
-                contenedor.innerHTML = '<p class="text-gray-500 text-center col-span-full py-8">No se encontraron vehículos.</p>';
+                contenedor.innerHTML = '<p class="text-gray-500 text-center col-span-full py-12 text-xl">No se encontraron vehículos que coincidan con la búsqueda.</p>';
                 return;
             }
 
             lista.forEach(carro => {
+                // Lógica de colores para el estado
+                let estadoColor = "bg-gray-500";
+                const estado = carro.estado_venta ? carro.estado_venta.toLowerCase() : "";
+                if(estado.includes("disponible")) estadoColor = "bg-green-500";
+                if(estado.includes("vendido")) estadoColor = "bg-red-600";
+                if(estado.includes("reservado")) estadoColor = "bg-yellow-500";
+
                 contenedor.innerHTML += `
-                    <div class="bg-white rounded-lg shadow hover:shadow-xl transition overflow-hidden cursor-pointer" onclick="verDetalle('${carro.id}')">
-                        <img src="${carro.fotos[0]}" class="w-full h-48 object-cover">
+                    <div class="bg-white rounded-lg shadow hover:shadow-xl transition overflow-hidden cursor-pointer relative border border-gray-100" onclick="verDetalle('${carro.id}')">
+                        <div class="absolute top-2 right-2 px-3 py-1 rounded font-bold text-xs text-white shadow-md z-10 uppercase ${estadoColor}">
+                            ${carro.estado_venta || 'Sin Estado'}
+                        </div>
+                        
+                        <div class="h-48 overflow-hidden bg-gray-100 flex items-center justify-center">
+                            <img src="${carro.fotos && carro.fotos.length > 0 ? carro.fotos[0] : 'https://via.placeholder.com/400x300?text=Sin+Foto'}" class="w-full h-full object-cover">
+                        </div>
+                        
                         <div class="p-4">
-                            <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded font-bold">ID: ${carro.id}</span>
-                            <h3 class="text-lg font-bold text-gray-800 mt-2">${carro.marca} ${carro.modelo} ${carro.anio}</h3>
-                            <p class="text-green-600 font-bold text-xl mt-1">${carro.precio}</p>
-                            <div class="flex justify-between text-xs text-gray-500 mt-3 border-t pt-2">
-                                <span><i class="fas fa-tachometer-alt"></i> ${carro.kilometraje}</span>
-                                <span><i class="fas fa-cog"></i> ${carro.transmision}</span>
+                            <h3 class="text-lg font-bold text-zinc-800 uppercase leading-tight">${carro.marca} ${carro.modelo}</h3>
+                            <p class="text-gray-500 text-sm mb-2">Año: ${carro.anio}</p>
+                            <p class="text-red-600 font-black text-xl">${carro.precio}</p>
+                            
+                            <div class="flex justify-between text-xs text-gray-500 mt-4 pt-3 border-t">
+                                <span title="Millaje / Kilometraje"><i class="fas fa-tachometer-alt mr-1"></i> ${carro.millaje} mi / ${carro.kilometraje}</span>
+                                <span title="Transmisión"><i class="fas fa-cog mr-1"></i> ${carro.transmision}</span>
                             </div>
                         </div>
                     </div>
@@ -112,20 +143,22 @@
         }
 
         // Buscador en tiempo real
-        document.getElementById('search').addEventListener('input', filtrar);
-        document.getElementById('filter-marca').addEventListener('change', filtrar);
-        document.getElementById('filter-anio').addEventListener('change', filtrar);
+        const inputsFiltro = ['search', 'filter-marca', 'filter-anio', 'filter-estado'];
+        inputsFiltro.forEach(id => document.getElementById(id).addEventListener('input', filtrar));
 
         function filtrar() {
             const busqueda = document.getElementById('search').value.toLowerCase();
             const marcaSel = document.getElementById('filter-marca').value;
             const anioSel = document.getElementById('filter-anio').value;
+            const estadoSel = document.getElementById('filter-estado').value;
 
             const resultado = inventario.filter(c => {
-                const coincideBusqueda = `${c.marca} ${c.modelo} ${c.id}`.toLowerCase().includes(busqueda);
+                const textoCarro = `${c.marca} ${c.modelo} ${c.id}`.toLowerCase();
+                const coincideBusqueda = textoCarro.includes(busqueda);
                 const coincideMarca = marcaSel === "" || c.marca === marcaSel;
                 const coincideAnio = anioSel === "" || c.anio === anioSel;
-                return coincideBusqueda && coincideMarca && coincideAnio;
+                const coincideEstado = estadoSel === "" || c.estado_venta === estadoSel;
+                return coincideBusqueda && coincideMarca && coincideAnio && coincideEstado;
             });
             renderizarCatálogo(resultado);
         }
@@ -135,23 +168,36 @@
             const carro = inventario.find(c => c.id === id);
             if(!carro) return;
 
-            fotosActuales = carro.fotos;
+            // Galería
+            fotosActuales = (carro.fotos && carro.fotos.length > 0) ? carro.fotos : ['https://via.placeholder.com/800x600?text=Sin+Foto'];
             fotoIndex = 0;
             actualizarImagenGaleria();
 
+            // Textos Generales
             document.getElementById('modal-titulo').innerText = `${carro.marca} ${carro.modelo} ${carro.anio}`;
             document.getElementById('modal-precio').innerText = carro.precio;
-            document.getElementById('modal-descripcion').innerText = carro.descripcion;
-            
+            document.getElementById('modal-id').innerText = carro.id;
+            document.getElementById('modal-ingreso').innerText = carro.fecha_ingreso;
+            document.getElementById('modal-descripcion').innerText = carro.descripcion || "No hay detalles adicionales.";
+
+            // Etiqueta Estado en Modal
+            const badge = document.getElementById('modal-badge-estado');
+            badge.innerText = carro.estado_venta || 'Sin Estado';
+            const estado = carro.estado_venta ? carro.estado_venta.toLowerCase() : "";
+            badge.className = `px-3 py-1 text-sm font-bold text-white rounded uppercase ${estado.includes("disponible") ? "bg-green-500" : (estado.includes("vendido") ? "bg-red-600" : "bg-yellow-500")}`;
+
+            // Ficha Técnica con los nuevos campos de Google Sheets
             document.getElementById('modal-detalles').innerHTML = `
-                <div><strong>Kilometraje:</strong> ${carro.kilometraje}</div>
-                <div><strong>Transmisión:</strong> ${carro.transmision}</div>
-                <div><strong>Combustible:</strong> ${carro.combustible}</div>
-                <div><strong>Ubicación:</strong> ${carro.ubicacion}</div>
+                <div class="border-b pb-1"><span class="font-bold text-gray-500"><i class="fas fa-road w-5"></i> Millaje:</span> <span class="float-right">${carro.millaje || '-'} mi</span></div>
+                <div class="border-b pb-1"><span class="font-bold text-gray-500"><i class="fas fa-tachometer-alt w-5"></i> Kilómetros:</span> <span class="float-right">${carro.kilometraje || '-'}</span></div>
+                <div class="border-b pb-1"><span class="font-bold text-gray-500"><i class="fas fa-cogs w-5"></i> Transmisión:</span> <span class="float-right">${carro.transmision || '-'}</span></div>
+                <div class="border-b pb-1"><span class="font-bold text-gray-500"><i class="fas fa-car-battery w-5"></i> Motor:</span> <span class="float-right">${carro.motor || '-'} L</span></div>
+                <div class="border-b pb-1"><span class="font-bold text-gray-500"><i class="fas fa-gas-pump w-5"></i> Combustible:</span> <span class="float-right">${carro.combustible || '-'}</span></div>
+                <div class="border-b pb-1"><span class="font-bold text-gray-500"><i class="fas fa-globe-americas w-5"></i> Origen:</span> <span class="float-right">${carro.origen || '-'}</span></div>
             `;
 
             // Configurar WhatsApp dinámico
-            const mensaje = encodeURIComponent(`Hola, estoy interesado en el auto ${carro.marca} ${carro.modelo} ${carro.anio} (Código ID: ${carro.id}) visto en la web.`);
+            const mensaje = encodeURIComponent(`Hola SALREZ Auto Solutions, estoy interesado en el vehículo ${carro.marca} ${carro.modelo} ${carro.anio} (ID: ${carro.id}). ¿Sigue disponible?`);
             document.getElementById('btn-whatsapp').href = `https://wa.me/${numeroWhatsApp}?text=${mensaje}`;
 
             document.getElementById('modal').classList.remove('hidden');

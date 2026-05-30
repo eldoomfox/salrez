@@ -17,9 +17,10 @@
     <main id="catalogo" class="max-w-5xl mx-auto mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
     </main>
 
-    <div id="modal" onclick="cerrarSiEsFondo(event)" class="fixed inset-0 bg-black bg-opacity-85 z-50 hidden overflow-y-auto">
+    <div id="modal" onclick="cerrarSiEsFondo(event)" class="fixed inset-0 bg-black bg-opacity-85 z-50 hidden overflow-y-auto cursor-pointer">
         <div class="flex justify-center min-h-screen pt-24 pb-10 px-2 sm:px-4">
-            <div class="bg-white rounded-lg max-w-5xl w-full relative p-4 sm:p-6 shadow-2xl h-fit">
+            <div onclick="event.stopPropagation()" class="bg-white rounded-lg max-w-5xl w-full relative p-4 sm:p-6 shadow-2xl h-fit cursor-default">
+                
                 <button onclick="cerrarModal()" class="absolute top-2 right-4 text-gray-400 hover:text-red-600 text-4xl z-10">&times;</button>
                 
                 <div class="relative w-full h-64 sm:h-96 bg-gray-200 rounded-lg overflow-hidden border">
@@ -29,12 +30,17 @@
                     <p id="galeria-contador" class="absolute bottom-2 right-2 bg-black/50 text-white text-xs px-2 py-1 rounded"></p>
                 </div>
 
-                <div class="mt-6 border-b pb-4">
+                <div class="mt-6 border-b pb-6">
                     <div class="flex justify-between items-start">
                         <h2 id="modal-titulo" class="text-2xl font-bold text-gray-800 uppercase"></h2>
                         <span id="modal-badge-estado" class="px-3 py-1 text-sm font-bold text-white rounded"></span>
                     </div>
-                    <p id="modal-precio" class="text-3xl font-black text-red-600 mt-2"></p>
+                    
+                    <p id="modal-precio" class="text-3xl font-black text-green-700 mt-2"></p>
+                    
+                    <a id="btn-whatsapp" href="#" target="_blank" class="mt-4 block w-full text-center bg-green-500 text-white font-bold py-3 rounded-lg hover:bg-green-600 transition">
+                        <i class="fab fa-whatsapp mr-2"></i> SOLICITAR INFORMACIÓN
+                    </a>
                 </div>
 
                 <div class="mt-4">
@@ -44,17 +50,13 @@
                     <h4 class="font-bold text-gray-500 uppercase text-sm mt-4 mb-2">Descripción:</h4>
                     <p id="modal-descripcion" class="text-sm text-gray-700 whitespace-pre-line border p-3 rounded"></p>
                 </div>
-
-                <a id="btn-whatsapp" href="#" target="_blank" class="mt-6 block text-center bg-green-500 text-white font-bold py-3 rounded-lg hover:bg-green-600 transition">
-                    <i class="fab fa-whatsapp mr-2"></i> SOLICITAR INFORMACIÓN
-                </a>
             </div>
         </div>
     </div>
 
     <script>
         let inventario = [], fotosActuales = [], fotoIndex = 0;
-        const numeroWhatsApp = "50255555555"; // ⚠️ Recuerda ajustar tu número
+        const numeroWhatsApp = "50255555555"; 
 
         async function cargarInventario() {
             try {
@@ -65,10 +67,10 @@
                     <div class="bg-white p-3 rounded shadow hover:shadow-lg cursor-pointer" onclick="verDetalle('${c.Modelo}')">
                         <img src="${c.Fotos[0] || 'https://via.placeholder.com/400'}" class="w-full h-40 object-cover rounded">
                         <h3 class="font-bold mt-2">${c.Marca} ${c.Modelo} (${c.Año})</h3>
-                        <p class="text-red-600 font-bold">${c.Precio}</p>
+                        <p class="text-green-700 font-bold">${c.Precio}</p>
                     </div>
                 `).join('');
-            } catch (e) { console.error("Error al cargar inventario:", e); }
+            } catch (e) { console.error("Error:", e); }
         }
 
         function verDetalle(modelo) {
@@ -81,7 +83,7 @@
 
             document.getElementById('modal-titulo').innerText = `${c.Marca} ${c.Modelo} ${c.Año}`;
             document.getElementById('modal-precio').innerText = c.Precio;
-            document.getElementById('modal-descripcion').innerText = c.Descripcion || "Sin descripción disponible.";
+            document.getElementById('modal-descripcion').innerText = c.Descripcion || "Sin detalles.";
             
             const badge = document.getElementById('modal-badge-estado');
             badge.innerText = c.Estado || "Sin estado";
@@ -90,18 +92,20 @@
             document.getElementById('modal-detalles').innerHTML = `
                 <div><b>Millaje:</b> ${c.Millaje || 'N/A'}</div>
                 <div><b>KM:</b> ${c.Kilometraje || 'N/A'}</div>
-                <div><b>Transmisión:</b> ${c.Transmision || 'N/A'}</div>
+                <div><b>Transmisión:</b> ${c.Transmisión || c.Transmision || 'N/A'}</div>
                 <div><b>Motor:</b> ${c.Motor || 'N/A'}</div>
             `;
             
-            document.getElementById('btn-whatsapp').href = `https://wa.me/${numeroWhatsApp}?text=Hola, estoy interesado en el ${c.Marca} ${c.Modelo} (${c.Año}).`;
+            document.getElementById('btn-whatsapp').href = `https://wa.me/${numeroWhatsApp}?text=Interesado en ${c.Marca} ${c.Modelo} (${c.Año})`;
             document.getElementById('modal').classList.remove('hidden');
         }
 
         function cerrarModal() { document.getElementById('modal').classList.add('hidden'); }
         
+        function cerrarSiEsFondo(event) { if (event.target.id === 'modal') cerrarModal(); }
+
         function actualizarGaleria() { 
-            document.getElementById('galeria-img').src = fotosActuales[fotoIndex] || 'https://via.placeholder.com/800'; 
+            document.getElementById('galeria-img').src = fotosActuales[fotoIndex] || ''; 
             document.getElementById('galeria-contador').innerText = `Foto ${fotoIndex + 1} / ${fotosActuales.length}`; 
         }
 

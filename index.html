@@ -84,4 +84,34 @@
             document.getElementById('modal-descripcion').innerText = c.Descripcion || "Sin descripción disponible.";
             
             const badge = document.getElementById('modal-badge-estado');
-            badge.innerText = c.Estado || "Sin
+            badge.innerText = c.Estado || "Sin estado";
+            badge.className = `px-3 py-1 text-sm font-bold text-white rounded ${(c.Estado === 'Disponible') ? 'bg-green-500' : 'bg-red-600'}`;
+
+            document.getElementById('modal-detalles').innerHTML = `
+                <div><b>Millaje:</b> ${c.Millaje || 'N/A'}</div>
+                <div><b>KM:</b> ${c.Kilometraje || 'N/A'}</div>
+                <div><b>Transmisión:</b> ${c.Transmision || 'N/A'}</div>
+                <div><b>Motor:</b> ${c.Motor || 'N/A'}</div>
+            `;
+            
+            document.getElementById('btn-whatsapp').href = `https://wa.me/${numeroWhatsApp}?text=Hola, estoy interesado en el ${c.Marca} ${c.Modelo} (${c.Año}).`;
+            document.getElementById('modal').classList.remove('hidden');
+        }
+
+        function cerrarModal() { document.getElementById('modal').classList.add('hidden'); }
+        
+        function actualizarGaleria() { 
+            document.getElementById('galeria-img').src = fotosActuales[fotoIndex] || 'https://via.placeholder.com/800'; 
+            document.getElementById('galeria-contador').innerText = `Foto ${fotoIndex + 1} / ${fotosActuales.length}`; 
+        }
+
+        function cambiarFoto(d) { 
+            if (fotosActuales.length === 0) return;
+            fotoIndex = (fotoIndex + d + fotosActuales.length) % fotosActuales.length; 
+            actualizarGaleria(); 
+        }
+
+        window.onload = cargarInventario;
+    </script>
+</body>
+</html>

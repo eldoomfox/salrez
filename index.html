@@ -10,20 +10,20 @@
 <body class="bg-gray-100 font-sans">
 
     <header class="bg-zinc-900 border-b-4 border-red-600 text-white p-4 shadow-md text-center">
-        <img src="logo.jpg" alt="SALREZ Auto Solutions" class="h-20 mx-auto object-contain" onerror="this.style.display='none'">
+        <img src="https://i.postimg.cc/4NJ05V8P/logo.jpg" alt="SALREZ Auto Solutions" class="h-20 mx-auto object-contain" onerror="this.style.display='none'">
         <p class="text-sm mt-2 text-gray-300 tracking-wider">INVENTARIO ACTUALIZADO</p>
     </header>
 
     <div class="max-w-7xl mx-auto mt-6 p-4 bg-white rounded-lg shadow grid grid-cols-1 md:grid-cols-4 gap-4">
         <input type="text" id="search" placeholder="🔍 Buscar marca o modelo..." class="border p-2 rounded w-full focus:outline-red-600">
         <select id="filter-marca" class="border p-2 rounded w-full focus:outline-red-600">
-            <option value="">Todas las Marcas</option>
+            <option value="">Marcas</option>
         </select>
         <select id="filter-anio" class="border p-2 rounded w-full focus:outline-red-600">
-            <option value="">Todos los Años</option>
+            <option value="">Años</option>
         </select>
         <select id="filter-estado" class="border p-2 rounded w-full focus:outline-red-600">
-            <option value="">Todos los Estados</option>
+            <option value="">Estados</option>
         </select>
     </div>
 
@@ -51,7 +51,6 @@
                             <span id="modal-badge-estado" class="px-3 py-1 text-sm font-bold text-white rounded"></span>
                         </div>
                         <p id="modal-precio" class="text-3xl font-black text-red-600 mt-2"></p>
-                        <p class="text-xs text-gray-400 mt-1">Ingreso: <span id="modal-ingreso"></span></p>
                         
                         <hr class="my-4 border-gray-200">
                         
@@ -75,7 +74,7 @@
         let inventario = [];
         let fotosActuales = [];
         let fotoIndex = 0;
-        const numeroWhatsApp = "50255555555"; 
+        const numeroWhatsApp = "+50253239898"; 
 
         async function cargarInventario() {
             try {
@@ -100,8 +99,8 @@
             cat.innerHTML = lista.map(c => `
                 <div class="bg-white rounded-lg shadow p-4 cursor-pointer hover:shadow-xl" onclick="verDetalle('${c.Modelo}')">
                     <img src="${c.Fotos[0] || ''}" class="w-full h-40 object-cover mb-2">
-                    <h3 class="font-bold uppercase">${c.Marca} ${c.Modelo}</h3>
-                    <p class="text-red-600 font-bold">${c.Precio}</p>
+                    <h3 class="font-bold uppercase">${c.Marca} ${c.Modelo} ${c.Año}</h3>
+                    <p class="text-green-800 font-bold">${c.Precio}</p>
                     <span class="text-xs px-2 py-1 bg-gray-200">${c.Estado}</span>
                 </div>
             `).join('');
@@ -128,15 +127,14 @@
             actualizarGaleria();
             document.getElementById('modal-titulo').innerText = `${c.Marca} ${c.Modelo} ${c.Año}`;
             document.getElementById('modal-precio').innerText = c.Precio;
-            document.getElementById('modal-ingreso').innerText = c.Fecha;
             document.getElementById('modal-descripcion').innerText = c.Descripcion;
             document.getElementById('modal-badge-estado').innerText = c.Estado;
             document.getElementById('modal-badge-estado').className = `px-3 py-1 text-sm font-bold text-white rounded ${c.Estado === 'Disponible' ? 'bg-green-500' : 'bg-red-600'}`;
             document.getElementById('modal-detalles').innerHTML = `
                 <div><span class="font-bold text-gray-500">Millaje:</span> ${c.Millaje}</div>
-                <div><span class="font-bold text-gray-500">KM:</span> ${c.Kilometraje}</div>
+                <div><span class="font-bold text-gray-500">Kilometraje:</span> ${c.Kilometraje}</div>
                 <div><span class="font-bold text-gray-500">Transmisión:</span> ${c.Transmision}</div>
-                <div><span class="font-bold text-gray-500">Motor:</span> ${c.Motor}</div>
+                <div><span class="font-bold text-gray-500">Motor-CC:</span> ${c.Motor}</div>
             `;
             document.getElementById('btn-whatsapp').href = `https://wa.me/${numeroWhatsApp}?text=Interesado en ${c.Marca} ${c.Modelo}`;
             document.getElementById('modal').classList.remove('hidden');

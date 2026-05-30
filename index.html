@@ -23,7 +23,7 @@
                 
                 <button onclick="cerrarModal()" class="absolute top-2 right-4 text-gray-400 hover:text-red-600 text-4xl z-10">&times;</button>
                 
-                <div class="relative w-full h-64 sm:h-96 bg-gray-200 rounded-lg overflow-hidden border">
+                <div class="relative w-full h-64 sm:h-96 lg:h-[500px] bg-black rounded-lg overflow-hidden border">
                     <img id="galeria-img" src="" class="w-full h-full object-contain">
                     <button onclick="cambiarFoto(-1)" class="absolute left-2 top-1/2 bg-black/50 text-white p-2 rounded-full"><i class="fas fa-chevron-left"></i></button>
                     <button onclick="cambiarFoto(1)" class="absolute right-2 top-1/2 bg-black/50 text-white p-2 rounded-full"><i class="fas fa-chevron-right"></i></button>
@@ -70,7 +70,7 @@
                         <p class="text-green-700 font-bold">${c.Precio}</p>
                     </div>
                 `).join('');
-            } catch (e) { console.error("Error:", e); }
+            } catch (e) { console.error("Error al cargar inventario:", e); }
         }
 
         function verDetalle(modelo) {
@@ -83,7 +83,7 @@
 
             document.getElementById('modal-titulo').innerText = `${c.Marca} ${c.Modelo} ${c.Año}`;
             document.getElementById('modal-precio').innerText = c.Precio;
-            document.getElementById('modal-descripcion').innerText = c.Descripcion || "Sin detalles.";
+            document.getElementById('modal-descripcion').innerText = c.Descripcion || "Sin descripción disponible.";
             
             const badge = document.getElementById('modal-badge-estado');
             badge.innerText = c.Estado || "Sin estado";
@@ -92,11 +92,11 @@
             document.getElementById('modal-detalles').innerHTML = `
                 <div><b>Millaje:</b> ${c.Millaje || 'N/A'}</div>
                 <div><b>KM:</b> ${c.Kilometraje || 'N/A'}</div>
-                <div><b>Transmisión:</b> ${c.Transmisión || c.Transmision || 'N/A'}</div>
+                <div><b>Transmisión:</b> ${c.Transmision || 'N/A'}</div>
                 <div><b>Motor:</b> ${c.Motor || 'N/A'}</div>
             `;
             
-            document.getElementById('btn-whatsapp').href = `https://wa.me/${numeroWhatsApp}?text=Interesado en ${c.Marca} ${c.Modelo} (${c.Año})`;
+            document.getElementById('btn-whatsapp').href = `https://wa.me/${numeroWhatsApp}?text=Hola, estoy interesado en el ${c.Marca} ${c.Modelo} (${c.Año}).`;
             document.getElementById('modal').classList.remove('hidden');
         }
 
@@ -105,7 +105,7 @@
         function cerrarSiEsFondo(event) { if (event.target.id === 'modal') cerrarModal(); }
 
         function actualizarGaleria() { 
-            document.getElementById('galeria-img').src = fotosActuales[fotoIndex] || ''; 
+            document.getElementById('galeria-img').src = fotosActuales[fotoIndex] || 'https://via.placeholder.com/800'; 
             document.getElementById('galeria-contador').innerText = `Foto ${fotoIndex + 1} / ${fotosActuales.length}`; 
         }
 

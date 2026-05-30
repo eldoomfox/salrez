@@ -3,123 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SALREZ Auto Solutions - Inventario de autos premium</title>
+    <title>SALREZ Auto Solutions - Inventario</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body class="bg-gray-100 font-sans">
 
-    <header class="bg-black border-b-4 border-red-600 text-white-bold p-4 shadow-md text-center">
-        <img src="https://i.postimg.cc/yYG2pd42/logo.jpg" alt="SALREZ Auto Solutions" class="h-40 mx-auto object-contain" onerror="this.style.display='none'">
+    <header class="bg-zinc-900 border-b-4 border-red-600 text-white p-4 shadow-md text-center">
+        <img src="logo.jpg" alt="SALREZ Auto Solutions" class="h-20 mx-auto object-contain" onerror="this.style.display='none'">
         <p class="text-sm mt-2 text-gray-300 tracking-wider">INVENTARIO ACTUALIZADO</p>
     </header>
 
-    <div class="max-w-7xl mx-auto mt-6 p-4 bg-white rounded-lg shadow grid grid-cols-1 md:grid-cols-4 gap-4">
-        <input type="text" id="search" placeholder="🔍 Buscar marca o modelo..." class="border p-2 rounded w-full focus:outline-red-600">
-        <select id="filter-marca" class="border p-2 rounded w-full focus:outline-red-600">
-            <option value="">Marcas</option>
-        </select>
-        <select id="filter-anio" class="border p-2 rounded w-full focus:outline-red-600">
-            <option value="">Años</option>
-        </select>
-        <select id="filter-estado" class="border p-2 rounded w-full focus:outline-red-600">
-            <option value="">Estados</option>
-        </select>
-    </div>
-
-    <main id="catalogo" class="max-w-7xl mx-auto mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 p-4">
+    <main id="catalogo" class="max-w-5xl mx-auto mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
     </main>
 
-    <div id="modal" class="fixed inset-0 bg-black bg-opacity-80 z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-lg max-w-5xl w-full max-h-[95vh] overflow-y-auto relative p-6">
-            <button onclick="cerrarModal()" class="absolute top-4 right-4 text-gray-500 hover:text-red-600 text-3xl font-bold">&times;</button>
+    <div id="modal" class="fixed inset-0 bg-black bg-opacity-85 z-50 hidden flex items-center justify-center p-2 sm:p-4 overflow-y-auto">
+        <div class="bg-white rounded-lg max-w-3xl w-full relative p-4 sm:p-6 shadow-2xl">
+            <button onclick="cerrarModal()" class="absolute top-2 right-4 text-gray-400 hover:text-red-600 text-4xl">&times;</button>
             
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-4">
-                <div>
-                    <div class="relative h-72 lg:h-96 bg-zinc-100 rounded-lg overflow-hidden flex items-center justify-center border">
-                        <img id="galeria-img" src="" class="max-h-full max-w-full object-contain">
-                        <button onclick="cambiarFoto(-1)" class="absolute left-2 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-white p-3 rounded-full hover:bg-red-600 transition"><i class="fas fa-chevron-left"></i></button>
-                        <button onclick="cambiarFoto(1)" class="absolute right-2 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-white p-3 rounded-full hover:bg-red-600 transition"><i class="fas fa-chevron-right"></i></button>
-                    </div>
-                    <p id="galeria-contador" class="text-center text-sm text-gray-500 mt-3 font-bold"></p>
-                </div>
-
-                <div class="flex flex-col justify-between">
-                    <div>
-                        <div class="flex justify-between items-start">
-                            <h2 id="modal-titulo" class="text-2xl font-bold text-gray-800 uppercase"></h2>
-                            <span id="modal-badge-estado" class="px-3 py-1 text-sm font-bold text-white rounded"></span>
-                        </div>
-                        <p id="modal-precio" class="text-3xl font-black text-red-600 mt-2"></p>
-                        
-                        <hr class="my-4 border-gray-200">
-                        
-                        <div class="grid grid-cols-2 gap-y-3 gap-x-4 text-sm text-gray-700" id="modal-detalles"></div>
-                        
-                        <div class="mt-4 bg-gray-50 p-4 rounded border">
-                            <h4 class="font-bold text-xs text-gray-500 uppercase mb-2">Descripción:</h4>
-                            <p id="modal-descripcion" class="text-sm whitespace-pre-line"></p>
-                        </div>
-                    </div>
-                    
-                    <a id="btn-whatsapp" href="#" target="_blank" class="mt-6 block text-center bg-green-500 text-white font-bold py-4 rounded-lg shadow-lg hover:bg-green-600 transition text-lg">
-                        <i class="fab fa-whatsapp mr-2 text-xl"></i> SOLICITAR INFORMACIÓN
-                    </a>
-                </div>
+            <div class="relative w-full h-64 sm:h-96 bg-gray-200 rounded-lg overflow-hidden border">
+                <img id="galeria-img" src="" class="w-full h-full object-contain">
+                <button onclick="cambiarFoto(-1)" class="absolute left-2 top-1/2 bg-black/50 text-white p-2 rounded-full"><i class="fas fa-chevron-left"></i></button>
+                <button onclick="cambiarFoto(1)" class="absolute right-2 top-1/2 bg-black/50 text-white p-2 rounded-full"><i class="fas fa-chevron-right"></i></button>
+                <p id="galeria-contador" class="absolute bottom-2 right-2 bg-black/50 text-white text-xs px-2 py-1 rounded"></p>
             </div>
+
+            <div class="mt-6 border-b pb-4">
+                <div class="flex justify-between items-start">
+                    <h2 id="modal-titulo" class="text-2xl font-bold text-gray-800 uppercase"></h2>
+                    <span id="modal-badge-estado" class="px-3 py-1 text-sm font-bold text-white rounded"></span>
+                </div>
+                <p id="modal-precio" class="text-3xl font-black text-red-600 mt-2"></p>
+            </div>
+
+            <div class="mt-4">
+                <h4 class="font-bold text-gray-500 uppercase text-sm mb-2">Detalles Técnicos:</h4>
+                <div class="grid grid-cols-2 gap-4 text-sm bg-gray-50 p-3 rounded" id="modal-detalles"></div>
+                
+                <h4 class="font-bold text-gray-500 uppercase text-sm mt-4 mb-2">Descripción:</h4>
+                <p id="modal-descripcion" class="text-sm text-gray-700 whitespace-pre-line border p-3 rounded"></p>
+            </div>
+
+            <a id="btn-whatsapp" href="#" target="_blank" class="mt-6 block text-center bg-green-500 text-white font-bold py-3 rounded-lg hover:bg-green-600 transition">
+                <i class="fab fa-whatsapp mr-2"></i> SOLICITAR INFORMACIÓN
+            </a>
         </div>
     </div>
 
     <script>
-        let inventario = [];
-        let fotosActuales = [];
-        let fotoIndex = 0;
-        const numeroWhatsApp = "+50253239898"; 
+        let inventario = [], fotosActuales = [], fotoIndex = 0;
+        const numeroWhatsApp = "50255555555"; 
 
         async function cargarInventario() {
             try {
                 const res = await fetch('inventario.json');
                 inventario = await res.json();
-                generarFiltros();
-                renderizarCatálogo(inventario);
-            } catch (error) { console.error("Error:", error); }
+                const cat = document.getElementById('catalogo');
+                cat.innerHTML = inventario.map(c => `
+                    <div class="bg-white p-3 rounded shadow hover:shadow-lg cursor-pointer" onclick="verDetalle('${c.Modelo}')">
+                        <img src="${c.Fotos[0] || ''}" class="w-full h-40 object-cover rounded">
+                        <h3 class="font-bold mt-2">${c.Marca} ${c.Modelo} (${c.Año})</h3>
+                        <p class="text-red-600 font-bold">${c.Precio}</p>
+                    </div>
+                `).join('');
+            } catch (e) { console.error(e); }
         }
-
-        function generarFiltros() {
-            const marcas = [...new Set(inventario.map(c => c.Marca))].filter(Boolean);
-            const anios = [...new Set(inventario.map(c => c.Año))].filter(Boolean).sort((a,b)=>b-a);
-            const estados = [...new Set(inventario.map(c => c.Estado))].filter(Boolean);
-            marcas.forEach(m => document.getElementById('filter-marca').innerHTML += `<option value="${m}">${m}</option>`);
-            anios.forEach(a => document.getElementById('filter-anio').innerHTML += `<option value="${a}">${a}</option>`);
-            estados.forEach(e => document.getElementById('filter-estado').innerHTML += `<option value="${e}">${e}</option>`);
-        }
-
-        function renderizarCatálogo(lista) {
-            const cat = document.getElementById('catalogo');
-            cat.innerHTML = lista.map(c => `
-                <div class="bg-white rounded-lg shadow p-4 cursor-pointer hover:shadow-xl" onclick="verDetalle('${c.Modelo}')">
-                    <img src="${c.Fotos[0] || ''}" class="w-full h-40 object-cover mb-2">
-                    <h3 class="font-bold uppercase">${c.Marca} ${c.Modelo} ${c.Año}</h3>
-                    <p class="text-green-800 font-bold">${c.Precio}</p>
-                    <span class="text-xs px-2 py-1 bg-gray-200">${c.Estado}</span>
-                </div>
-            `).join('');
-        }
-
-        function filtrar() {
-            const busqueda = document.getElementById('search').value.toLowerCase();
-            const marca = document.getElementById('filter-marca').value;
-            const anio = document.getElementById('filter-anio').value;
-            const estado = document.getElementById('filter-estado').value;
-            renderizarCatálogo(inventario.filter(c => 
-                (c.Marca.toLowerCase().includes(busqueda) || c.Modelo.toLowerCase().includes(busqueda)) &&
-                (marca === "" || c.Marca === marca) &&
-                (anio === "" || c.Año == anio) &&
-                (estado === "" || c.Estado === estado)
-            ));
-        }
-
-        ['search', 'filter-marca', 'filter-anio', 'filter-estado'].forEach(id => document.getElementById(id).addEventListener('input', filtrar));
 
         function verDetalle(modelo) {
             const c = inventario.find(car => car.Modelo === modelo);
@@ -131,17 +79,15 @@
             document.getElementById('modal-badge-estado').innerText = c.Estado;
             document.getElementById('modal-badge-estado').className = `px-3 py-1 text-sm font-bold text-white rounded ${c.Estado === 'Disponible' ? 'bg-green-500' : 'bg-red-600'}`;
             document.getElementById('modal-detalles').innerHTML = `
-                <div><span class="font-bold text-gray-500">Millaje:</span> ${c.Millaje}</div>
-                <div><span class="font-bold text-gray-500">Kilometraje:</span> ${c.Kilometraje}</div>
-                <div><span class="font-bold text-gray-500">Transmisión:</span> ${c.Transmision}</div>
-                <div><span class="font-bold text-gray-500">Motor-CC:</span> ${c.Motor}</div>
+                <div><b>Millaje:</b> ${c.Millaje}</div><div><b>KM:</b> ${c.Kilometraje}</div>
+                <div><b>Transmisión:</b> ${c.Transmision}</div><div><b>Motor:</b> ${c.Motor}</div>
             `;
             document.getElementById('btn-whatsapp').href = `https://wa.me/${numeroWhatsApp}?text=Interesado en ${c.Marca} ${c.Modelo}`;
             document.getElementById('modal').classList.remove('hidden');
         }
 
         function cerrarModal() { document.getElementById('modal').classList.add('hidden'); }
-        function actualizarGaleria() { document.getElementById('galeria-img').src = fotosActuales[fotoIndex] || ''; document.getElementById('galeria-contador').innerText = `Foto ${fotoIndex + 1} de ${fotosActuales.length}`; }
+        function actualizarGaleria() { document.getElementById('galeria-img').src = fotosActuales[fotoIndex] || ''; document.getElementById('galeria-contador').innerText = `Foto ${fotoIndex + 1} / ${fotosActuales.length}`; }
         function cambiarFoto(d) { fotoIndex = (fotoIndex + d + fotosActuales.length) % fotosActuales.length; actualizarGaleria(); }
 
         window.onload = cargarInventario;

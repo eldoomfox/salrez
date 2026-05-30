@@ -23,11 +23,11 @@
                 
                 <button onclick="cerrarModal()" class="absolute top-2 right-4 text-gray-400 hover:text-red-600 text-4xl z-10">&times;</button>
                 
-                <div class="relative w-full h-64 sm:h-96 lg:h-[500px] bg-black rounded-lg overflow-hidden border">
-                    <img id="galeria-img" src="" class="w-full h-full object-contain">
-                    <button onclick="cambiarFoto(-1)" class="absolute left-2 top-1/2 bg-black/50 text-white p-2 rounded-full"><i class="fas fa-chevron-left"></i></button>
-                    <button onclick="cambiarFoto(1)" class="absolute right-2 top-1/2 bg-black/50 text-white p-2 rounded-full"><i class="fas fa-chevron-right"></i></button>
-                    <p id="galeria-contador" class="absolute bottom-2 right-2 bg-black/50 text-white text-xs px-2 py-1 rounded"></p>
+                <div class="relative w-full h-64 sm:h-96 lg:h-[550px] bg-black rounded-lg overflow-hidden border">
+                    <img id="galeria-img" src="" class="w-full h-full object-cover">
+                    <button onclick="cambiarFoto(-1)" class="absolute left-2 top-1/2 bg-black/40 hover:bg-black/70 text-white p-3 rounded-full transition"><i class="fas fa-chevron-left"></i></button>
+                    <button onclick="cambiarFoto(1)" class="absolute right-2 top-1/2 bg-black/40 hover:bg-black/70 text-white p-3 rounded-full transition"><i class="fas fa-chevron-right"></i></button>
+                    <p id="galeria-contador" class="absolute bottom-4 right-4 bg-black/60 text-white text-xs px-3 py-1 rounded-full backdrop-blur-sm"></p>
                 </div>
 
                 <div class="mt-6 border-b pb-6">
@@ -96,12 +96,11 @@
                 <div><b>Motor:</b> ${c.Motor || 'N/A'}</div>
             `;
             
-            document.getElementById('btn-whatsapp').href = `https://wa.me/${numeroWhatsApp}?text=Hola, estoy interesado en el ${c.Marca} ${c.Modelo} (${c.Año}).`;
+            document.getElementById('btn-whatsapp').href = `https://wa.me/${numeroWhatsApp}?text=Interesado en ${c.Marca} ${c.Modelo} (${c.Año})`;
             document.getElementById('modal').classList.remove('hidden');
         }
 
         function cerrarModal() { document.getElementById('modal').classList.add('hidden'); }
-        
         function cerrarSiEsFondo(event) { if (event.target.id === 'modal') cerrarModal(); }
 
         function actualizarGaleria() { 

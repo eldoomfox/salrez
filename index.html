@@ -19,7 +19,7 @@
 
     <div id="modal" onclick="cerrarSiEsFondo(event)" class="fixed inset-0 bg-black bg-opacity-85 z-50 hidden overflow-y-auto cursor-pointer">
         <div class="flex justify-center min-h-screen pt-24 pb-10 px-2 sm:px-4">
-            <div onclick="event.stopPropagation()" class="bg-white rounded-lg max-w-5xl w-full relative p-4 sm:p-6 shadow-2xl h-fit cursor-default">
+            <div class="bg-white rounded-lg max-w-5xl w-full relative p-4 sm:p-6 shadow-2xl h-fit cursor-default">
                 
                 <button onclick="cerrarModal()" class="absolute top-2 right-4 text-gray-400 hover:text-red-600 text-4xl z-10">&times;</button>
                 
@@ -31,13 +31,9 @@
                 </div>
 
                 <div class="mt-6 border-b pb-6">
-                    <div class="flex justify-between items-start">
-                        <h2 id="modal-titulo" class="text-2xl font-bold text-gray-800 uppercase"></h2>
-                        <span id="modal-badge-estado" class="px-3 py-1 text-sm font-bold text-white rounded"></span>
-                    </div>
-                    
+                    <h2 id="modal-titulo" class="text-2xl font-bold text-gray-800 uppercase"></h2>
+                    <span id="modal-badge-estado" class="px-3 py-1 text-sm font-bold text-white rounded mt-1 inline-block"></span>
                     <p id="modal-precio" class="text-3xl font-black text-green-700 mt-2"></p>
-                    
                     <a id="btn-whatsapp" href="#" target="_blank" class="mt-4 block w-full text-center bg-green-500 text-white font-bold py-3 rounded-lg hover:bg-green-600 transition">
                         <i class="fab fa-whatsapp mr-2"></i> SOLICITAR INFORMACIÓN
                     </a>
@@ -46,7 +42,6 @@
                 <div class="mt-4">
                     <h4 class="font-bold text-gray-500 uppercase text-sm mb-2">Detalles Técnicos:</h4>
                     <div class="grid grid-cols-2 gap-4 text-sm bg-gray-50 p-3 rounded" id="modal-detalles"></div>
-                    
                     <h4 class="font-bold text-gray-500 uppercase text-sm mt-4 mb-2">Descripción:</h4>
                     <p id="modal-descripcion" class="text-sm text-gray-700 whitespace-pre-line border p-3 rounded"></p>
                 </div>
@@ -70,52 +65,43 @@
                         <p class="text-green-700 font-bold">${c.Precio}</p>
                     </div>
                 `).join('');
-            } catch (e) { console.error("Error al cargar inventario:", e); }
+            } catch (e) { console.error("Error:", e); }
         }
 
         function verDetalle(modelo) {
             const c = inventario.find(car => car.Modelo === modelo);
             if (!c) return;
-
-            fotosActuales = c.Fotos || []; 
-            fotoIndex = 0;
+            fotosActuales = c.Fotos || []; fotoIndex = 0;
             actualizarGaleria();
-
             document.getElementById('modal-titulo').innerText = `${c.Marca} ${c.Modelo} ${c.Año}`;
             document.getElementById('modal-precio').innerText = c.Precio;
-            document.getElementById('modal-descripcion').innerText = c.Descripcion || "Sin descripción disponible.";
-            
+            document.getElementById('modal-descripcion').innerText = c.Descripcion || "Sin descripción.";
             const badge = document.getElementById('modal-badge-estado');
             badge.innerText = c.Estado || "Sin estado";
             badge.className = `px-3 py-1 text-sm font-bold text-white rounded ${(c.Estado === 'Disponible') ? 'bg-green-500' : 'bg-red-600'}`;
-
             document.getElementById('modal-detalles').innerHTML = `
-                <div><b>Millaje:</b> ${c.Millaje || 'N/A'}</div>
-                <div><b>KM:</b> ${c.Kilometraje || 'N/A'}</div>
-                <div><b>Transmisión:</b> ${c.Transmision || 'N/A'}</div>
-                <div><b>Motor:</b> ${c.Motor || 'N/A'}</div>
+                <div><b>Millaje:</b> ${c.Millaje || 'N/A'}</div><div><b>KM:</b> ${c.Kilometraje || 'N/A'}</div>
+                <div><b>Transmisión:</b> ${c.Transmision || 'N/A'}</div><div><b>Motor:</b> ${c.Motor || 'N/A'}</div>
             `;
-            
-            document.getElementById('btn-whatsapp').href = `https://wa.me/${numeroWhatsApp}?text=Interesado en ${c.Marca} ${c.Modelo} (${c.Año})`;
+            document.getElementById('btn-whatsapp').href = `https://wa.me/${numeroWhatsApp}?text=Interesado en ${c.Marca} ${c.Modelo}`;
             document.getElementById('modal').classList.remove('hidden');
         }
 
         function cerrarModal() { document.getElementById('modal').classList.add('hidden'); }
         
-        // Esta función detecta si el clic es fuera de la tarjeta blanca
+        // CORRECCIÓN AQUÍ: Detecta clics fuera de la caja blanca
         function cerrarSiEsFondo(event) {
-            if (event.target.id === 'modal') {
+            if (!event.target.closest('.shadow-2xl')) {
                 cerrarModal();
             }
         }
 
         function actualizarGaleria() { 
-            document.getElementById('galeria-img').src = fotosActuales[fotoIndex] || 'https://via.placeholder.com/800'; 
+            document.getElementById('galeria-img').src = fotosActuales[fotoIndex] || ''; 
             document.getElementById('galeria-contador').innerText = `Foto ${fotoIndex + 1} / ${fotosActuales.length}`; 
         }
 
         function cambiarFoto(d) { 
-            if (fotosActuales.length === 0) return;
             fotoIndex = (fotoIndex + d + fotosActuales.length) % fotosActuales.length; 
             actualizarGaleria(); 
         }

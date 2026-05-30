@@ -17,8 +17,9 @@
     <main id="catalogo" class="max-w-5xl mx-auto mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
     </main>
 
-<div id="modal" class="fixed inset-0 bg-black bg-opacity-85 z-50 hidden overflow-y-auto">        <div class="bg-white rounded-lg max-w-3xl w-full relative p-4 sm:p-6 shadow-2xl">
-            <button onclick="cerrarModal()" class="absolute top-2 right-4 text-gray-400 hover:text-red-600 text-4xl">&times;</button>
+<div id="modal" class="fixed inset-0 bg-black bg-opacity-85 z-50 hidden overflow-y-auto">
+    <div class="flex justify-center min-h-screen pt-24 pb-10 px-2 sm:px-4">
+        <div class="bg-white rounded-lg max-w-3xl w-full relative p-4 sm:p-6 shadow-2xl h-fit">            <button onclick="cerrarModal()" class="absolute top-2 right-4 text-gray-400 hover:text-red-600 text-4xl">&times;</button>
             
             <div class="relative w-full h-64 sm:h-96 bg-gray-200 rounded-lg overflow-hidden border">
                 <img id="galeria-img" src="" class="w-full h-full object-contain">

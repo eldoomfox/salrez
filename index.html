@@ -64,7 +64,7 @@
                 inventario = await res.json();
                 const cat = document.getElementById('catalogo');
                 cat.innerHTML = inventario.map(c => `
-                    <div class="bg-white p-3 rounded shadow hover:shadow-lg cursor-pointer" onclick="verDetalle('${c.Modelo}')">
+                    <div class="bg-white p-3 rounded shadow hover:shadow-lg cursor-pointer transition" onclick="verDetalle('${c.Modelo}')">
                         <img src="${c.Fotos[0] || 'https://via.placeholder.com/400'}" class="w-full h-40 object-cover rounded">
                         <h3 class="font-bold mt-2">${c.Marca} ${c.Modelo} (${c.Año})</h3>
                         <p class="text-green-700 font-bold">${c.Precio}</p>
@@ -101,7 +101,13 @@
         }
 
         function cerrarModal() { document.getElementById('modal').classList.add('hidden'); }
-        function cerrarSiEsFondo(event) { if (event.target.id === 'modal') cerrarModal(); }
+        
+        // Esta función detecta si el clic es fuera de la tarjeta blanca
+        function cerrarSiEsFondo(event) {
+            if (event.target.id === 'modal') {
+                cerrarModal();
+            }
+        }
 
         function actualizarGaleria() { 
             document.getElementById('galeria-img').src = fotosActuales[fotoIndex] || 'https://via.placeholder.com/800'; 
